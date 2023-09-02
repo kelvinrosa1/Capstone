@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import Product from "./ProductHome";
+import Product from "./Product";
 
-function Home() {
+function Home({ filteredProducts }) {
     const [products, setProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -10,7 +10,6 @@ function Home() {
             try {
                 const grabProducts = await fetch('https://fakestoreapi.com/products');
                 const result = await grabProducts.json();
-                console.log(result)
                 setProducts(result);
             } catch (error) {
                 console.log(error);
@@ -19,9 +18,7 @@ function Home() {
         fetchApi();
     }, []);
 
-    const filteredProducts = products.filter(product =>
-        product.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+
 
     return (
         <>
