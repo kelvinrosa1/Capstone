@@ -1,40 +1,67 @@
-.navbar {
-  width: 100%;
-  height: 60px;
-  display: flex;
-  padding: 10px;
-  align-items: center;
-  font-family: 'Anton', sans-serif;
-  justify-content: space-around;
-  position: relative;
-}
+/* Navbar.css */
 
+/* Common styles for links */
 a {
   text-decoration: none;
-  color: black;
   font-size: large;
+  color: black;
 }
 
+/* Navbar styles */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.navbar-link:hover {
+  text-decoration: underline;
+}
+
+/* Container */
 .container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   justify-items: center;
   margin: auto;
-  width: 50%;
+  width: 90%; /* Changed to a relative width for responsiveness */
+  max-width: 1200px; /* Added a max-width to prevent excessive width on larger screens */
   margin-top: 50px;
 }
 
+/* Search Bar */
 .searchBar {
   text-align: center;
-  margin: 10px 0px 10px 0px;
+  margin: 10px 0;
 }
 
 .searchBar > input {
   padding: 10px;
-  width: 20%;
+  width: 100%; /* Changed to 100% for responsiveness */
+  max-width: 300px; /* Added a max-width for large screens */
 }
 
+/* Single Product Card */
 .singleProduct {
   text-align: center;
 }
@@ -47,16 +74,24 @@ a {
   flex-direction: column;
   align-items: center;
   height: 100%;
-  
 }
 
 div > .MuiCardMedia-root {
   display: block;
-  -webkit-background-size: contain;
   background-size: contain;
   background-repeat: no-repeat;
-  -webkit-background-position: center;
   background-position: center;
   height: 194px;
+  width: 150px;
+}
+
+/* Cart Box */
+.cartBox {
+  display: flex;
+  /* object-fit: contain; This property doesn't apply to flex containers */
+  width: 180px;
+}
+
+.cartImage {
   width: 150px;
 }
