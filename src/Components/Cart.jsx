@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 
 function Cart() {
   const [productIds, setProductsIds] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [quantity, setQuantity] = useState(0);
+  // const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -33,6 +35,16 @@ function Cart() {
     getProducts();
   }, []);
 
+  const removeFromCart = (productId) => {
+    const updatedCart = filteredProducts.filter(
+      (product) => product.id !== productId
+    );
+
+    setFilteredProducts(updatedCart);
+
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
   console.log({ productIds, filteredProducts });
 
   return (
@@ -45,6 +57,14 @@ function Cart() {
               <img src={product.image} className="cartImage" />
               <h1>{product.title}</h1>
               <p>{product.price}</p>
+              <Stack spacing={2} direction="row">
+                <Button
+                  variant="text"
+                  onClick={() => removeFromCart(product.id)} // Call the function to remove the item
+                >
+                  Remove
+                </Button>
+              </Stack>
             </li>
           </ul>
         </div>
