@@ -11,7 +11,6 @@ function Home() {
       try {
         const grabProducts = await fetch("https://fakestoreapi.com/products");
         const result = await grabProducts.json();
-        console.log(result);
         setProducts(result);
       } catch (error) {
         console.log(error);
@@ -28,7 +27,7 @@ function Home() {
     <>
       <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />{" "}
       {/* Use the SearchInput component here */}
-      <div className="container">
+      <div className="product-container">
         {filteredProducts.map((product) => (
           <Product key={product.id} product={product} />
         ))}

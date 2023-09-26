@@ -9,6 +9,7 @@ import Profile from "./Components/Profile";
 import SingleProduct from "./Components/SingleProduct";
 import Cart from "./Components/Cart";
 import Footer from "./Components/Footer";
+// import Checkout from "./Components/Checkout";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -23,6 +24,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/product/:id" element={<SingleProduct />} />
+        {/* <Route path="/checkout" element={<Checkout />} /> */}
       </Routes>
       <Footer />
     </>

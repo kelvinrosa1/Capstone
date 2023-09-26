@@ -56,13 +56,11 @@ export default function Login() {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         setToken(json.token);
         localStorage.setItem("token", json.token);
         fetch("https://fakestoreapi.com/users")
           .then((res) => res.json())
           .then((json) => {
-            console.log(json);
             const findId = json.find(
               (element) => element.username == data.get("username")
             );
