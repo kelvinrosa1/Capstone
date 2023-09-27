@@ -119,7 +119,10 @@ export default function PrimarySearchAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1, color: "white" }}>
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        sx={{ color: "white", backgroundColor: "black" }}
+      >
         <Toolbar>
           <Typography
             variant="h6"
@@ -133,7 +136,6 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
               color="inherit"
               onClick={() => {
                 navigate("/cart");
