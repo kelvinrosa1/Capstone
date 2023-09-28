@@ -25,6 +25,9 @@ function Home() {
 
   return (
     <>
+      <div className="banner">
+        <img src="/public/images/img.png" />
+      </div>
       <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />{" "}
       {/* Use the SearchInput component here */}
       <div className="product-container">

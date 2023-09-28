@@ -111,6 +111,7 @@ function Cart() {
               <p>Quantity: {product.quantity}</p>
               <Stack spacing={2} direction="row">
                 <Button
+                  sx={{ backgroundColor: "black" }}
                   variant="text"
                   onClick={() => removeFromCart(product.id)}
                 >
