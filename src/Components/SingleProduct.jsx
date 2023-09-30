@@ -23,7 +23,7 @@ function SingleProduct() {
   }, []);
   return (
     <div className="singleProduct">
-      <img className="productImg" src={singleId?.image} />
+      <img className="productImage" src={singleId?.image} />
       <div>
         <h2>
           {singleId?.title} - ${singleId?.price}

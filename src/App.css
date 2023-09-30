@@ -171,13 +171,20 @@ div > .MuiCardMedia-root {
     grid-template-columns: 1fr; /* Single column for products on mobile */
   }
 
-  .singleProduct {
-    grid-template-columns: 1fr; /* Single column for image and text on mobile */
-  }
+.singleProduct {
+  display: flex; /* Use flexbox to align image and text vertically */
+  flex-direction: column; /* Stack image and text vertically on mobile */
+  align-items: center; /* Center both image and text horizontally */
+  text-align: center; /* Center-align text */
+}
 
-  .productImage {
-    max-width: 100%; /* Ensure the image fits within the container on mobile */
-  }
+.productImage {
+  max-width: 100%; /* Ensure the image fits within the container on mobile */
+  max-height: 100%;
+  height: auto; /* Allow the image's height to adjust proportionally */
+  margin-bottom: 10px; /* Add some spacing between the image and text */
+}
+
 
   /* Additional mobile-specific styles can be added here */
 
