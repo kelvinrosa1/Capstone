@@ -23,12 +23,17 @@ function SingleProduct() {
   }, []);
   return (
     <div className="singleProduct">
-      <img src={singleId?.image} />
-      <h2>
-        {singleId?.title} - ${singleId?.price}
-      </h2>
-      <p>{singleId?.description}</p>
-      <AddToCart productId={id} />
+      <img className="productImg" src={singleId?.image} />
+      <div>
+        <h2>
+          {singleId?.title} - ${singleId?.price}
+        </h2>
+        <h3>
+          {singleId?.rating.rate} ⭐ ({singleId?.rating.count})
+        </h3>
+        <p>{singleId?.description}</p>
+        <AddToCart productId={id} />
+      </div>
     </div>
   );
 }

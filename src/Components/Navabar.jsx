@@ -2,175 +2,107 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { PriceContext } from "../App";
+import { useContext } from "react";
 
-export default function PrimarySearchAppBar() {
+export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  let navigate = useNavigate();
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
+  const handleClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const isLoggedIn = localStorage.getItem("id");
-
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem
-        onClick={() => {
-          navigate("/profile");
-        }}
-      >
-        Profile
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      {isLoggedIn ? (
-        <MenuItem
-          onClick={() => {
-            localStorage.clear();
-            navigate("/");
-          }}
-        >
-          Logout
-        </MenuItem>
-      ) : (
-        <MenuItem
-          onClick={() => {
-            navigate("/login");
-          }}
-        >
-          Login
-        </MenuItem>
-      )}
-    </Menu>
-  );
-
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
+  let nav = useNavigate();
+  const loggedIn = localStorage.getItem("id");
+  const { setTotalPrice } = useContext(PriceContext);
 
   return (
-    <Box sx={{ flexGrow: 1, color: "white" }}>
-      <AppBar
-        position="static"
-        sx={{ color: "white", backgroundColor: "black" }}
-      >
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" sx={{ backgroundColor: "black" }}>
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            <Link to="/">Universal Market</Link>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Link to="/"> Universal Market</Link>
           </Typography>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <div>
             <IconButton
               size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
               color="inherit"
               onClick={() => {
-                navigate("/cart");
+                nav("/cart");
               }}
             >
               <ShoppingCartIcon />
             </IconButton>
             <IconButton
               size="large"
-              edge="end"
               aria-label="account of current user"
-              aria-controls={menuId}
+              aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              onClick={handleMenu}
               color="inherit"
             >
               <AccountCircle />
             </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
             >
-              <MoreIcon />
-            </IconButton>
-          </Box>
+              <MenuItem
+                onClick={() => {
+                  nav("/profile");
+                }}
+              >
+                Profile
+              </MenuItem>
+              {loggedIn ? (
+                <MenuItem
+                  onClick={() => {
+                    localStorage.clear();
+                    setTotalPrice(0);
+                    nav("/");
+                  }}
+                >
+                  Logout
+                </MenuItem>
+              ) : (
+                <MenuItem
+                  onClick={() => {
+                    nav("/login");
+                  }}
+                >
+                  Login
+                </MenuItem>
+              )}
+            </Menu>
+          </div>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
     </Box>
   );
 }

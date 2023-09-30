@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 // eslint-disable-next-line react/prop-types
 function AddToCart({ productId }) {
@@ -19,7 +20,7 @@ function AddToCart({ productId }) {
     localStorage.setItem("cart", JSON.stringify(items));
     navigate(`/cart`);
   };
-  return <button onClick={handleSubmit}>Add to cart</button>;
+  return <Button onClick={handleSubmit}>Add to cart</Button>;
 }
 
 export default AddToCart;

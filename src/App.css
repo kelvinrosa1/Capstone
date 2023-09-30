@@ -35,11 +35,24 @@ a {
 /* Single Product Card */
 
 .singleProduct {
-  text-align: center;
   display: grid;
-  border-style: solid;
-  width: auto;
+  grid-template-columns: 1fr 1fr; /* Two equal columns for image and text */
+  gap: 20px; /* Add some space between the image and text */
+  border: 1px solid #ccc; /* Border style */
+  padding: 20px; /* Add padding for better spacing */
 }
+
+.productImage {
+  max-width: 100%; /* Ensure the image doesn't exceed its container */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.productInfo {
+  text-align: left; /* Align text to the left within the text column */
+}
+
+/* You can add more specific styles as needed */
+
 
 .MuiCard-root {
   display: flex;
@@ -58,6 +71,10 @@ div > .MuiCardMedia-root {
   background-position: center;
   height: 194px;
   width: 150px;
+}
+
+.css-d3wcwz-MuiTypography-root {
+  font-size: 20px !important;
 }
 
 /* Cart Box */
@@ -141,43 +158,55 @@ div > .MuiCardMedia-root {
   margin: 20px 0px 0px 0px;
   display: grid;
   justify-content: center;
+  object-fit: contain;
+}
+
+.bannerImg {
+  width: 100%;
 }
 
 /* Media Query for Mobile View */
-
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .product-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .searchBar > input {
-    max-width: 100%;
+    grid-template-columns: 1fr; /* Single column for products on mobile */
   }
 
   .singleProduct {
-    width: 100%;
+    grid-template-columns: 1fr; /* Single column for image and text on mobile */
   }
 
-  div > .MuiCardMedia-root {
-    height: auto;
-    width: 100%;
+  .productImage {
+    max-width: 100%; /* Ensure the image fits within the container on mobile */
   }
 
-  .container {
-    max-width: 100%;
-  }
+  /* Additional mobile-specific styles can be added here */
 
   .cartContainer {
-    max-width: 100%;
+    max-width: 100%; /* Full width on mobile */
   }
 
-  .banner {
-    margin: 10px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    object-fit: contain;
+  /* Adjust other styles as needed for mobile view */
+
+  /* Example: Center-align text in search bar on mobile */
+  .searchBar {
+    text-align: center;
   }
+
+  /* Example: Increase padding on the search input for better touch interaction on mobile */
+  .searchBar > input {
+    padding: 15px;
+  }
+
+  /* Example: Reduce font size in the cart box for mobile */
+  .cartBox p {
+    font-size: 14px;
+  }
+
+  .css-1futezt-MuiTypography-root {
+    display: block !important;
+  }
+
 }
+
 
 
