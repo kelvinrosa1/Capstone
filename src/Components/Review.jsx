@@ -4,30 +4,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
-
-const products = [
-  {
-    name: "Product 1",
-    desc: "A nice thing",
-    price: "$9.99",
-  },
-  {
-    name: "Product 2",
-    desc: "Another thing",
-    price: "$3.45",
-  },
-  {
-    name: "Product 3",
-    desc: "Something else",
-    price: "$6.51",
-  },
-  {
-    name: "Product 4",
-    desc: "Best thing of all",
-    price: "$14.11",
-  },
-  { name: "Shipping", desc: "", price: "Free" },
-];
+import { PriceContext } from "../App";
+import { useContext } from "react";
 
 const addresses = ["1 MUI Drive", "Reactville", "Anytown", "99999", "USA"];
 const payments = [
@@ -38,22 +16,36 @@ const payments = [
 ];
 
 export default function Review() {
+  // eslint-disable-next-line no-unused-vars
+  const { totalPrice, setTotalPrice } = useContext(PriceContext);
+  const [newCart, setNewCart] = React.useState([]);
+  React.useEffect(() => {
+    function updateCart() {
+      const cart = JSON.parse(localStorage.getItem("cartInfo"));
+      setNewCart(cart);
+    }
+    updateCart();
+  }, []);
+  // const total = newCart.reduce(
+  //   (acc, product) => acc + product.price * product.quantity,
+  //   0
+  // );
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+        {newCart.map((product) => (
+          <ListItem key={product.title} sx={{ py: 1, px: 0 }}>
+            <ListItemText primary={product.title} secondary={product.desc} />
+            <Typography variant="body2">${product.price}</Typography>
           </ListItem>
         ))}
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $34.06
+            ${totalPrice.toFixed(1)}
           </Typography>
         </ListItem>
       </List>

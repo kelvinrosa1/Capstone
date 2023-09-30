@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
-import Stack from "@mui/material/Stack";
+import { useEffect, useState, useContext } from "react";
 import Button from "@mui/material/Button";
+import { IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import { Link } from "react-router-dom";
+import { PriceContext } from "../App";
 
 function Cart() {
   // eslint-disable-next-line no-unused-vars
   const [productIds, setProductsIds] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const { totalPrice, setTotalPrice } = useContext(PriceContext);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -24,16 +27,16 @@ function Cart() {
         const filtered = allProducts.filter((product) =>
           cartProductIds.includes(product.id)
         );
-
-        setCartItems(
-          filtered.map((product) => ({
-            ...product,
-            quantity: newCart.find(
-              (cartItem) => cartItem.productId === product.id
-            ).quantity,
-          }))
-        );
-
+        const stateCart = filtered.map((product) => ({
+          ...product,
+          quantity: newCart.find(
+            (cartItem) => cartItem.productId === product.id
+          ).quantity,
+        }));
+        localStorage.setItem("cartInfo", JSON.stringify(stateCart));
+        console.log({ stateCart });
+        setCartItems(stateCart);
+        updateTotalPrice(stateCart);
         setProductsIds(cartProductIds);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -70,9 +73,7 @@ function Cart() {
       }
       return item;
     });
-
-    setCartItems(updatedCartItems);
-
+    console.log(cartItems);
     localStorage.setItem(
       "cart",
       JSON.stringify(
@@ -82,6 +83,7 @@ function Cart() {
         }))
       )
     );
+    setCartItems(updatedCartItems);
 
     updateTotalPrice(updatedCartItems);
   };
@@ -93,6 +95,7 @@ function Cart() {
     );
     setTotalPrice(total);
   };
+  console.log(totalPrice);
 
   return (
     <div className="cartContainer">
@@ -108,24 +111,29 @@ function Cart() {
               />
               <h1>{product.title}</h1>
               <p>Price: {product.price}</p>
-              <p>Quantity: {product.quantity}</p>
-              <Stack spacing={2} direction="row">
-                <Button
-                  sx={{ backgroundColor: "black" }}
-                  variant="text"
-                  onClick={() => removeFromCart(product.id)}
-                >
-                  Remove
-                </Button>
-                <Button
-                  variant="text"
-                  onClick={() =>
-                    updateQuantity(product.id, product.quantity + 1)
-                  }
-                >
-                  Add One
-                </Button>
-              </Stack>
+              <IconButton
+                sx={{ backgroundColor: "black" }}
+                variant="text"
+                onClick={() => updateQuantity(product.id, product.quantity - 1)}
+              >
+                <RemoveIcon />
+              </IconButton>
+              <p>Quantity: {product.quantity}</p>{" "}
+              <IconButton
+                sx={{ backgroundColor: "black" }}
+                variant="text"
+                onClick={() => updateQuantity(product.id, product.quantity + 1)}
+              >
+                <AddIcon />
+              </IconButton>
+              <br />
+              <Button
+                sx={{ marginTop: "20px" }}
+                variant="text"
+                onClick={() => removeFromCart(product.id)}
+              >
+                Remove
+              </Button>
             </li>
           </ul>
         </div>
