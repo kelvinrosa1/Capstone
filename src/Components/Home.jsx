@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Product from "./ProductHome";
-import SearchInput from "./Searchinput";
+import SearchInput from "./SearchInput";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -26,7 +26,7 @@ function Home() {
   return (
     <>
       <div className="banner">
-        <img className="bannerImg" src="/public/images/img.png" />
+        <img className="bannerImg" src="./assets/img.png" />
       </div>
       <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />{" "}
       {/* Use the SearchInput component here */}
